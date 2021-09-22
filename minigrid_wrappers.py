@@ -46,3 +46,76 @@ class CoordsObsWrapper(gym.core.ObservationWrapper):
 
     def observation(self, obs):
         return self.agent_pos[1], self.agent_pos[0]
+
+
+class RewardWrapper(gym.core.Wrapper):
+
+    def __init__(self, env):
+        super().__init__(env)
+
+    def step(self, action):
+        self.env.step_count += 1
+
+        reward = 0
+        done = False
+
+        # Get the position in front of the agent
+        fwd_pos = self.env.front_pos
+
+        # Get the contents of the cell in front of the agent
+        fwd_cell = self.env.grid.get(*fwd_pos)
+
+        # Rotate left
+        if action == self.env.actions.left:
+            self.env.agent_dir -= 1
+            if self.env.agent_dir < 0:
+                self.env.agent_dir += 4
+
+        # Rotate right
+        elif action == self.env.actions.right:
+            self.env.agent_dir = (self.env.agent_dir + 1) % 4
+
+        # Move forward
+        elif action == self.env.actions.forward:
+            if fwd_cell == None or fwd_cell.can_overlap():
+                self.env.agent_pos = fwd_pos
+            if fwd_cell != None and fwd_cell.type == 'goal':
+                done = True
+                reward = 1
+            if fwd_cell != None and fwd_cell.type == 'lava':
+                reward = -2
+                done = True
+
+        # Pick up an object
+        elif action == self.env.actions.pickup:
+            if fwd_cell and fwd_cell.can_pickup():
+                if self.env.carrying is None:
+                    self.env.carrying = fwd_cell
+                    self.env.carrying.cur_pos = np.array([-1, -1])
+                    self.env.grid.set(*fwd_pos, None)
+
+        # Drop an object
+        elif action == self.env.actions.drop:
+            if not fwd_cell and self.env.carrying:
+                self.env.grid.set(*fwd_pos, self.env.carrying)
+                self.env.carrying.cur_pos = fwd_pos
+                self.env.carrying = None
+
+        # Toggle/activate an object
+        elif action == self.env.actions.toggle:
+            if fwd_cell:
+                fwd_cell.toggle(self.env, fwd_pos)
+
+        # Done action (not used by default)
+        elif action == self.env.actions.done:
+            pass
+
+        else:
+            assert False, "unknown action"
+
+        if self.env.step_count >= self.env.max_steps:
+            done = True
+
+        obs = self.env.gen_obs()
+        reward += -0.001
+        return obs, reward, done, {}    
