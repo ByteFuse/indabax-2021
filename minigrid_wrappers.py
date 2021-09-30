@@ -2,6 +2,8 @@ import gym
 from gym.spaces import Discrete
 import numpy as np
 from gym_minigrid.minigrid import Goal
+import random
+
 
 class DirectionObsWrapper(gym.core.ObservationWrapper):
     """
@@ -118,4 +120,39 @@ class RewardWrapper(gym.core.Wrapper):
 
         obs = self.env.gen_obs()
         reward += -0.001
-        return obs, reward, done, {}    
+        return obs, reward, done, {}
+
+    def reset(self, random_start=False):
+        # Current position and direction of the agent
+        self.env.agent_pos = None
+        self.env.agent_dir = None
+
+        # Generate a new random grid at the start of each episode
+        # To keep the same grid for each episode, call env.seed() with
+        # the same seed before calling env.reset()
+        self.env._gen_grid(self.env.width, self.env.height)
+
+        # These fields should be defined by _gen_grid
+        assert self.env.agent_pos is not None
+        assert self.env.agent_dir is not None
+
+        if random_start:
+            self.env.agent_pos = (random.randint(1,self.env.width-2),random.randint(1,self.env.height-2))
+            start_cell = self.env.grid.get(*self.env.agent_pos)
+            while start_cell is not None:
+                self.env.agent_pos = (random.randint(1,self.env.width-2),random.randint(1,self.env.height-2))
+                start_cell = self.env.grid.get(*self.env.agent_pos)
+
+        # Check that the agent doesn't overlap with an object
+        start_cell = self.env.grid.get(*self.env.agent_pos)
+        assert start_cell is None or start_cell.can_overlap()
+
+        # Item picked up, being carried, initially nothing
+        self.env.carrying = None
+
+        # Step count since episode start
+        self.env.step_count = 0
+
+        # Return first observation
+        obs = self.env.gen_obs()
+        return obs
