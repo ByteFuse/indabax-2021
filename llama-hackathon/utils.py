@@ -153,7 +153,6 @@ def process_image(image=None, image_path=None):
     '''
 
     assert image or image_path, 'Either audio_signal or audio_path must be provided'
-    assert image and image_path, 'Either audio_signal or audio_path must be provided'
     
     imgage_process = torchvision.transforms.Compose([
             torchvision.transforms.Resize((224,224)),
