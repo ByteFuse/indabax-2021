@@ -14,6 +14,8 @@ Here are some guidelines and additional information:
 * The data must be in a specific format for the models to work, where  utils.py also includes functions for converting a given image/audio signal (or file path) to the correct format.
 * You are not required to use the models or anything else provided, as long as the product performs multimodal search. We want a proof of concept, not a finished product. *Do not spend money on this; instead, use free resources.**
 
+You can open the getting started notebook with this link [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Alphawave-ML/indabax-2021/blob/hackathon-additions/llama-hackathon/llama-hackathon-starter-kit.ipynb)
+
 
 Prize for the winner:
 
