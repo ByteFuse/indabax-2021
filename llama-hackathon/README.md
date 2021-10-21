@@ -13,14 +13,12 @@ Here are some guidelines and additional information:
 * This repository contains all of the model architectures (models.py) and weights. The utils.py file contains code for downloading the flickr8 dataset as well as the CSV containing the meta data.
 * The data must be in a specific format for the models to work, where  utils.py also includes functions for converting a given image/audio signal (or file path) to the correct format.
 * You are not required to use the models or anything else provided, as long as the product performs multimodal search. We want a proof of concept, not a finished product. **Do not spend money on this; instead, use free resources.**
+* If you have finished your product, send an email to careers@bytefuse.ai saying you have finshed. We will then organize a meeting with you where you can showcase your product. This meeting can then be recorded, if you wish so, and shared to the community. **The final deadline to send an email is 10 December.**
 
 You can open the getting started notebook with this link [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ByteFuse/indabax-2021/blob/main/llama-hackathon/llama-hackathon-starter-kit.ipynb)
 
 
-Prize for the winner:
-
-* The winner will receive **R7500** as well as a guaranteed spot in our LLama program in 2022. 
-* The runner up will be invited for a place in our LLama progamme.
+The winner will receive **R7500** as well as a guaranteed spot in our LLama program in 2022. 
 
 To get you started, and perhaps spur you on if you are planning to fine tune the models, this repo also contains a starter notebook that will download the required data and weights, allowing you to then go crazy with the models and data. By playing with the data, you will see where the models are still strugling to generalize or simply not working. 
 
