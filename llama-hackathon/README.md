@@ -19,7 +19,7 @@ You can open the getting started notebook with this link [![Open In Colab](https
 
 Prize for the winner:
 
-* The winner will receive ***R7500** as well as a guaranteed spot in our LLama program in 2022. 
+* The winner will receive **R7500** as well as a guaranteed spot in our LLama program in 2022. 
 * The runner up will be invited for a place in our LLama progamme.
 
 To get you started, and perhaps spur you on if you are planning to fine tune the models, this repo also contains a starter notebook that will download the required data and weights, allowing you to then go crazy with the models and data. By playing with the data, you will see where the models are still strugling to generalize or simply not working. 
