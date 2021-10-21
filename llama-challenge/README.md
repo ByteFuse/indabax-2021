@@ -15,7 +15,7 @@ Here are some guidelines and additional information:
 * You are not required to use the models or anything else provided, as long as the product performs multimodal search. We want a proof of concept, not a finished product. **Do not spend money on this; instead, use free resources.**
 * If you have finished your product, send an email to careers@bytefuse.ai saying you have finshed. We will then organize a meeting with you where you can showcase your product. This meeting can then be recorded, if you wish so, and shared to the community. The final deadline to send an email is 10 December for this challenge.
 
-You can open the getting started notebook with this link [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ByteFuse/indabax-2021/blob/main/llama-challenge/llama-challenge1-starter-kit.ipynb)
+You can open the getting started notebook with this link [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ByteFuse/indabax-2021/blob/main/llama-challenge/llama-challenge-starter-kit.ipynb)
 
 If you really impress us with your POC, you will be invited to join our Llama program where we can help you take this project even further while introducing you to our ecosystem and giving you experience to work with systems that process millions of requests. 
 
