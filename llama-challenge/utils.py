@@ -6,7 +6,6 @@ import librosa
 import torch
 import torch.nn.functional as F
 import torchvision
-import torchaudio
 
 import torch.nn as nn
 import torch.nn.functional as F
@@ -61,7 +60,7 @@ class AudioCnn(nn.Module):
         return x
 
 
-def process_audio(audio_signal=None, audio_path=None, sample_rate=None):
+def process_audio(original_sample_rate=None, audio_signal=None, audio_path=None):
     
     '''
     Function to preprocess either a raw audio input, or audio from a given file path. The 
@@ -70,12 +69,11 @@ def process_audio(audio_signal=None, audio_path=None, sample_rate=None):
 
     Arguments:
 
-    audio:          Raw audio input signal, either a numpy array or a torch tensor. When you provide this,
-                    audio_path must be None.
-    audio_path:     Full path to a file to be loaded. File formats supported are wav, mp3 or mp4. When you
-                    provide this, audio_signal and sample_rate must be None.
-    sample_rate:    Only to be provided if you supply the raw audio. This is the sample rate at which the audio
-                    was sampled.
+    audio:                   Raw audio input signal, either a numpy array or a torch tensor. When you provide this,
+                             audio_path must be None.
+    audio_path:              Full path to a file to be loaded. File formats supported are wav, mp3 or mp4. When you
+                             provide this, audio_signal and sample_rate must be None.
+    original_sample_rate:    This is the sample rate at which the audio was sampled.
 
 
     Output:
@@ -87,19 +85,18 @@ def process_audio(audio_signal=None, audio_path=None, sample_rate=None):
 
     assert audio_signal or audio_path, 'Either audio_signal or audio_path must be provided'
     
-    if audio_signal:
-        assert sample_rate, 'when providing the audio signal, you must also provide sample_rate of the signal'
-
     if audio_path:
-        audio, sample_rate = torchaudio.load(audio_path, normalize=True)
+        audio, _ = librosa.load(audio_path, original_sample_rate)
 
 
     required_sample_rate = 16e3
     max_samples = int(required_sample_rate*7)
 
-    if sample_rate!=required_sample_rate:
-        audio = torchaudio.transforms.Resample(sample_rate, required_sample_rate)(audio)
-        
+    if original_sample_rate!=required_sample_rate:
+        audio = librosa.resample(audio, original_sample_rate, required_sample_rate)
+    
+    audio = torch.tensor(np.expand_dims(audio, axis=0))
+
     if audio.shape[0]>1:
         audio = torch.mean(audio, dim=0, keepdim=True)
 
