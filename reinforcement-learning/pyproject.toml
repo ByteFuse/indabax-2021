@@ -1,0 +1,15 @@
+[project]
+name = "reinforcement-learning"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "gymnasium>=1.0.0",
+    "ipykernel>=6.29.5",
+    "minigrid>=3.0.0",
+    "pandas>=2.2.3",
+    "scikit-learn>=1.5.2",
+    "seaborn>=0.13.2",
+    "tqdm>=4.67.1",
+]
